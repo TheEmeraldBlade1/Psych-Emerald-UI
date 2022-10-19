@@ -73,6 +73,13 @@ function onCreate()
     addLuaText('inputTxt')
     setProperty('inputTxt.y', 0)
     setProperty('inputTxt.x', 0)
+    makeLuaText('perTxt', 'NILL', 0, 540, 360)
+    setTextSize('perTxt', 20)
+    setTextBorder('perTxt', 2, '000000')
+    setTextFont('perTxt', font)
+    addLuaText('perTxt')
+    setProperty('perTxt.y', 20)
+    setProperty('perTxt.x', 0)
  end
 
 
@@ -100,10 +107,12 @@ function onUpdatePost(elapsed)
     local ratingFullAsStr = string.format("%.2f", ratingFull)
 
     local tempRatingNameVery = accuracyToRatingString(ratingFull)
+    local sexrating2 = ratingsex(ratingFull)
 
     local Accuracy = ratingFullAsStr..'%'
     local ratingNameS = ''..tempRatingNameVery..''
     local ratingNameE = ' ('..ratingNameM..') - '..PRates..''
+    local ratingNameA = ''
     local secondsTotal = getProperty('secondsTotal')
 	-- start of "update", some variables weren't updated yet
     -- This updates the contents of the score text.
@@ -125,14 +134,16 @@ function onUpdatePost(elapsed)
     setTextFont('msTxt', font)
     songTxtv2 = ''..getProperty('curSong')..''
     setProperty('songTxt.text', songTxtv2)
-    judTxtv2 = ''..'Sicks:'..sicksNumber..'\nGoods:'..goodsNumber..'\nBads:'..badsNumber..'\nShits:'..shitsNumber..'\nMisses:'..getmissed..'\nCombo:'..combo..'\n'
+    judTxtv2 = ''..'Sicks:'..sicksNumber..'\nGoods:'..goodsNumber..'\nBads:'..badsNumber..'\nShits:'..shitsNumber..'\nMisses:'..getmissed..'\nCombo:'..combo..'\nHits:'..input..'\n'
     setProperty('judTxt.text', judTxtv2)
     pointTxtv2 = ''..'Score:'..getscore..''
     setProperty('pointTxt.text', pointTxtv2)
     accTxtv2 = ''..'Accuracy:'..Accuracy..''
     setProperty('accTxt.text', accTxtv2)
-    inputTxtv2 = ''..'Hits:'..input..''
+    inputTxtv2 = ''..''
     setProperty('inputTxt.text', inputTxtv2)
+    perTxtv2 = ''..''..ratingNameA..''
+    setProperty('perTxt.text', perTxtv2)
     if botplay then
         pointTxtv2 = ''..'Score:'..botscore..''
         setProperty('pointTxt.text', pointTxtv2)
@@ -155,7 +166,7 @@ function onUpdatePost(elapsed)
         --setTextSize('scoreTxt', 16)
         setProperty('scoreTxt.y', 697)
       -- setProperty('scoreTxt.x', 0)
-        rateTxtv2 = ''..'Rating:'..ratingNameS..''..ratingNameE
+        rateTxtv2 = ''..'Rating:'..ratingNameS..''..ratingNameE..''
          setProperty('rateTxt.text', rateTxtv2)
          tempRatingNameVery = accuracyToRatingString(ratingFull)
     end
@@ -326,6 +337,32 @@ function accuracyToRatingString(accuracy) -- HELPER FUNCTION
         return 'C'
     else
         return 'D'
+    end
+end
+function ratingsex(accuracy) -- HELPER FUNCTION
+    -- Please don't cancel me for repeat if else statements blame python 3.10 for not releasing sooner
+    if accuracy > 99.99 then
+        return '100%'
+    elseif accuracy >= 90 then
+        return '90%'
+    elseif accuracy >= 80 then
+        return '80%'
+    elseif accuracy >= 70 then
+        return '70%'
+    elseif accuracy >= 60 then
+        return '60%'
+    elseif accuracy >= 50 then
+        return '50%'
+    elseif accuracy >= 40 then
+        return '40%'
+    elseif accuracy >= 30 then
+        return '30%'
+    elseif accuracy >= 20 then
+        return '20%'
+    elseif accuracy >= 10 then
+        return '10%'
+    else
+        return '0%'
     end
 end
 
