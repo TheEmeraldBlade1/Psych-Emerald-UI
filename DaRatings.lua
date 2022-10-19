@@ -19,6 +19,7 @@ local songname = 'NILL'
 local songTxtv2 = 'NILL'
 local combobreak = 0
 local maxcombo = 0
+local input = 0
 font = "vcr.ttf" -- the font that the text will use.
 
 
@@ -65,6 +66,13 @@ function onCreate()
     addLuaText('accTxt')
     setProperty('accTxt.y', 697)
     setProperty('accTxt.x', 550)
+    makeLuaText('inputTxt', 'NILL', 0, 540, 360)
+    setTextSize('inputTxt', 20)
+    setTextBorder('inputTxt', 2, '000000')
+    setTextFont('inputTxt', font)
+    addLuaText('inputTxt')
+    setProperty('inputTxt.y', 0)
+    setProperty('inputTxt.x', 0)
  end
 
 
@@ -117,19 +125,21 @@ function onUpdatePost(elapsed)
     setTextFont('msTxt', font)
     songTxtv2 = ''..getProperty('curSong')..''
     setProperty('songTxt.text', songTxtv2)
-    judTxtv2 = ''..'Sicks:'..sicksNumber..'\nGoods:'..goodsNumber..'\nBads:'..badsNumber..'\nShits:'..shitsNumber..'\nMisses:'..getmissed..'\n Combo:'..combo..' ('..maxcombo..')\n'
+    judTxtv2 = ''..'Sicks:'..sicksNumber..'\nGoods:'..goodsNumber..'\nBads:'..badsNumber..'\nShits:'..shitsNumber..'\nMisses:'..getmissed..'\nCombo:'..combo..'\n'
     setProperty('judTxt.text', judTxtv2)
     pointTxtv2 = ''..'Score:'..getscore..''
     setProperty('pointTxt.text', pointTxtv2)
     accTxtv2 = ''..'Accuracy:'..Accuracy..''
     setProperty('accTxt.text', accTxtv2)
+    inputTxtv2 = ''..'Inputs:'..input..''
+    setProperty('inputTxt.text', inputTxtv2)
     if botplay then
         pointTxtv2 = ''..'Score:'..botscore..''
         setProperty('pointTxt.text', pointTxtv2)
     end
     -- UPDATING SCORETXT
 
-    if ratingName == '?' then
+    if input == 0 then
         local beforeScoreTxt = ''
         setProperty('scoreTxt.text', beforeScoreTxt)
        --setTextSize('scoreTxt', 16)
@@ -150,7 +160,7 @@ function onUpdatePost(elapsed)
          tempRatingNameVery = accuracyToRatingString(ratingFull)
     end
     if botplay then
-        if ratingName == '?' then
+        if input == 0 then
             local beforeScoreTxt = ''
             setProperty('scoreTxt.text', beforeScoreTxt)
          --  setTextSize('scoreTxt', 16)
@@ -172,7 +182,7 @@ function onUpdatePost(elapsed)
         end       
     end
     if pm then
-        if ratingName == '?' then
+        if input == 0 then
             local beforeScoreTxt = 'Accuracy:'..Accuracy..''
             setProperty('scoreTxt.text', beforeScoreTxt)
           -- setTextSize('scoreTxt', 16)
@@ -201,6 +211,7 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
         songPos = getPropertyFromClass('Conductor', 'songPosition')
         rOffset = getPropertyFromClass('ClientPrefs','ratingOffset')
         botscore = botscore + 350
+        input = input + 1
         maxcombo = maxcombo + 1
         updateAccuracy(strumTime, songPos, rOffset)
     end
