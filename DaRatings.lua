@@ -131,7 +131,7 @@ function onUpdatePost(elapsed)
     setProperty('pointTxt.text', pointTxtv2)
     accTxtv2 = ''..'Accuracy:'..Accuracy..''
     setProperty('accTxt.text', accTxtv2)
-    inputTxtv2 = ''..'Inputs:'..input..''
+    inputTxtv2 = ''..'Hits:'..input..''
     setProperty('inputTxt.text', inputTxtv2)
     if botplay then
         pointTxtv2 = ''..'Score:'..botscore..''
